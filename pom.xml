@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.aiun</groupId>
+    <artifactId>BackendManageSystem</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <!--项目打包类型-->
+    <packaging>pom</packaging>
+    <!--模块管理，实现pom项目之间的聚合关系，
+    聚合关系下对父项目使用mvn命令，对其它子项目产生同样的效果-->
+    <modules>
+        <module>backend-common</module>
+        <module>backend-orderManagementSystem</module>
+        <module>backend-generator</module>
+    </modules>
+
+    <!--继承spring-boot-starter-parent依赖-->
+    <!--使用继承方式，实现复用，符合继承的都可以被使用-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.2.RELEASE</version>
+    </parent>
+    <!--集中定义依赖组件版本号，但不引入，在子工程中用到申明的依赖时，
+    可以不加依赖的版本号，这样可以统一管理工程中用到的版本号-->
+    <properties>
+        <!--JDK版本定义-->
+        <java.version>1.8</java.version>
+        <!--MyBatis依赖-->
+        <mybatis.version>2.1.0</mybatis.version>
+        <!--pagehelper 分页依赖-->
+        <pagehelper.version>1.2.13</pagehelper.version>
+        <!--mysql 数据库依赖-->
+        <mysql.version>8.0.18</mysql.version>
+        <!--druid 连接池依赖-->
+        <druid.version>1.1.20</druid.version>
+    </properties>
+    <!--项目依赖管理，父项目只是声明依赖，子项目需要写明需要的依赖（可以省略版本信息）-->
+    <dependencyManagement>
+        <dependencies>
+            <!--mybatis依赖-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!--pagehelper 分页依赖-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper.version}</version>
+            </dependency>
+            <!--mysql 数据库依赖-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+            <!--druid 连接池依赖-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
