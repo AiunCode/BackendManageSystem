@@ -1,5 +1,9 @@
 *.class
 
+#log file
+*.logs
+*.log
+
 #package file
 *.war
 *.ear

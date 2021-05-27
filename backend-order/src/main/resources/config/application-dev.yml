@@ -1,0 +1,63 @@
+server:
+ port: 8082                  # 项目访问端口
+ servlet:
+  context-path: /            # 项目访问路径
+#产品图片保存的位置
+image:
+  localhost: F:/Work/imgHost/
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+# Spring
+spring:
+ # 服务应用名称
+ application:
+  name: backend-order
+  # 数据源
+ datasource:
+  driver-class-name: com.mysql.cj.jdbc.Driver
+  url: jdbc:mysql://localhost:3306/trade?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+  username: root
+  password: root
+  # 指定druid 连接池以及druid 连接池配置
+  type: com.alibaba.druid.pool.DruidDataSource
+  druid:
+   initial-size: 1          # 初始连接数
+   max-active: 20           # 最大连接数
+   max-idle: 20             # 最大空闲
+   min-idle: 1              # 最小空闲
+   max-wait: 60000          # 最长等待时间
+ jackson:
+   date-format: yyyy-mm-dd HH:mm:ss
+   time-zone: GMT+8
+
+# MyBatis
+mybatis:
+ # 配置 MyBatis 数据返回类型别名（默认别名是类名）
+ type-aliases-package: com.aiun.order.pojo
+ # 配置 MyBatis Mapper 映射文件
+ mapper-locations: classpath:/mappers/*.xml
+
+# MyBatis SQL 打印（方法接口所在的包，不是 Mapper.xml 所在的包）
+#logging:
+ #level:
+ # com.aiun.order.mappers: debug
+ ## pagehelper
+ pagehelper:
+   helperDialect: sqlite #postgresql
+   reasonable: true
+   supportMethodsArguments: true
+   params: countSql
+   count: countSql
+   returnPageInfo: check
+
+ # 记录日志
+ logging:
+   config: classpath:logback-spring.xml
+ # Start logging
+   level:
+     root: INFO
