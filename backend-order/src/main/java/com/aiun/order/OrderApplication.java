@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @EnableEurekaClient
 @SpringBootApplication
-@EnableFeignClients(basePackages = {"com.aiun.product.feign", "com.aiun.user.feign"})
+@EnableFeignClients(basePackages = {"com.aiun.product.feign", "com.aiun.user.feign", "com.aiun.shipping.feign"})
 public class OrderApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderApplication.class, args);

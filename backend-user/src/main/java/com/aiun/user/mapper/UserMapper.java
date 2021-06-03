@@ -71,4 +71,12 @@ public interface UserMapper {
      * @return 影响的记录行数
      */
     int checkEmail(String email);
+
+    /**
+     * 检查密码
+     * @param password
+     * @param userId
+     * @return
+     */
+    int checkPassword(@Param("password") String password, @Param("userId") Integer userId);
 }

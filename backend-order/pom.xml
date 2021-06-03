@@ -38,6 +38,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
+        <!-- shipping api 依赖 -->
+        <dependency>
+            <groupId>com.aiun</groupId>
+            <artifactId>backend-service-shipping-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- eureka client 依赖-->
         <dependency>
             <groupId>org.springframework.cloud</groupId>

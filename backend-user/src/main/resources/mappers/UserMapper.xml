@@ -1,31 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.aiun.user.mapper.UserMapper">
-  <resultMap id="BaseResultMap" type="com.aiun.user.pojo.User">
-
-    <constructor>
-      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="username" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="question" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="answer" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="role" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
-      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiun.user.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.aiun.user.pojo.User" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="username" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="email" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="question" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="answer" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="role" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
     </constructor>
   </resultMap>
-  <sql id="Base_Column_List">
+  <sql id="Base_Column_List" >
     id, username, password, email, phone, question, answer, role, create_time, update_time
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
     <include refid="Base_Column_List" />
     from trade_user
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from trade_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
@@ -39,119 +38,123 @@
       #{record.answer,jdbcType=VARCHAR}, #{record.role,jdbcType=INTEGER}, now(),
       now())
   </insert>
-  <insert id="insertSelective" parameterType="com.aiun.user.pojo.User">
+  <insert id="insertSelective" parameterType="com.aiun.user.pojo.User" >
     insert into trade_user
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
         id,
       </if>
-      <if test="username != null">
+      <if test="username != null" >
         username,
       </if>
-      <if test="password != null">
+      <if test="password != null" >
         password,
       </if>
-      <if test="email != null">
+      <if test="email != null" >
         email,
       </if>
-      <if test="phone != null">
+      <if test="phone != null" >
         phone,
       </if>
-      <if test="question != null">
+      <if test="question != null" >
         question,
       </if>
-      <if test="answer != null">
+      <if test="answer != null" >
         answer,
       </if>
-      <if test="role != null">
+      <if test="role != null" >
         role,
       </if>
-      <if test="createTime != null">
+      <if test="createTime != null" >
         create_time,
       </if>
-      <if test="updateTime != null">
+      <if test="updateTime != null" >
         update_time,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
+      <if test="username != null" >
+        #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="password != null" >
+        #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        #{email,jdbcType=VARCHAR},
+      <if test="email != null" >
+        #{record.email,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
-        #{phone,jdbcType=VARCHAR},
+      <if test="phone != null" >
+        #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="question != null">
-        #{question,jdbcType=VARCHAR},
+      <if test="question != null" >
+        #{record.question,jdbcType=VARCHAR},
       </if>
-      <if test="answer != null">
-        #{answer,jdbcType=VARCHAR},
+      <if test="answer != null" >
+        #{record.answer,jdbcType=VARCHAR},
       </if>
-      <if test="role != null">
-        #{role,jdbcType=INTEGER},
+      <if test="role != null" >
+        #{record.role,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
+      <if test="createTime != null" >
+        #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
+      <if test="updateTime != null" >
+        now(),
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.aiun.user.pojo.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiun.user.pojo.User" >
     update trade_user
-    <set>
-      <if test="username != null">
-        username = #{username,jdbcType=VARCHAR},
+    <set >
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
       </if>
-      <if test="email != null">
-        email = #{email,jdbcType=VARCHAR},
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
       </if>
-      <if test="phone != null">
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="question != null">
-        question = #{question,jdbcType=VARCHAR},
+      <if test="record.question != null" >
+        question = #{record.question,jdbcType=VARCHAR},
       </if>
-      <if test="answer != null">
-        answer = #{answer,jdbcType=VARCHAR},
+      <if test="record.answer != null" >
+        answer = #{record.answer,jdbcType=VARCHAR},
       </if>
-      <if test="role != null">
-        role = #{role,jdbcType=INTEGER},
+      <if test="record.role != null" >
+        role = #{record.role,jdbcType=INTEGER},
       </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      <if test="record.updateTime != null" >
+        update_time = now(),
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{record.id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.aiun.user.pojo.User">
+  <update id="updateByPrimaryKey" parameterType="com.aiun.user.pojo.User" >
     update trade_user
-    set username = #{username,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
-      email = #{email,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR},
-      question = #{question,jdbcType=VARCHAR},
-      answer = #{answer,jdbcType=VARCHAR},
-      role = #{role,jdbcType=INTEGER},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    set username = #{record.username,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      question = #{record.question,jdbcType=VARCHAR},
+      answer = #{record.answer,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = now()
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="checkUsername" resultType="int" parameterType="string">
+    select count(1) from trade_user
+    where username = #{username}
+  </select>
   <select id="selectLogin" resultMap="BaseResultMap" parameterType="map">
     select
     <include refid="Base_Column_List" />
@@ -159,12 +162,13 @@
     where username = #{username}
     and password = #{password}
   </select>
-  <select id="checkUsername" resultType="int" parameterType="string">
-    select count(1) from trade_user
-    where username = #{username}
-  </select>
   <select id="checkEmail" resultType="int" parameterType="string">
     select count(1) from trade_user
     where email = #{email}
+  </select>
+  <select id="checkPassword" resultType="int" parameterType="map">
+    select count(1) from trade_user
+    where id = #{userId}
+    and password = #{password}
   </select>
 </mapper>

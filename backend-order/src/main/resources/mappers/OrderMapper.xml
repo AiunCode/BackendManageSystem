@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiun.order.mapper.OrderMapper" >
+  <resultMap id="BaseResultMap" type="com.aiun.order.pojo.Order" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="order_no" jdbcType="BIGINT" javaType="java.lang.Long" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="shipping_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="payment" jdbcType="DECIMAL" javaType="java.math.BigDecimal" />
+      <arg column="payment_type" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="postage" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="status" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="payment_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="send_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="end_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="close_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_no, user_id, shipping_id, payment, payment_type, postage, status, payment_time,
+    send_time, end_time, close_time, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from trade_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trade_order
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiun.order.pojo.Order" >
+    insert into trade_order (id, order_no, user_id,
+      shipping_id, payment, payment_type,
+      postage, status, payment_time,
+      send_time, end_time, close_time,
+      create_time, update_time)
+    values (#{record.id,jdbcType=INTEGER}, #{record.orderNo,jdbcType=BIGINT}, #{record.userId,jdbcType=INTEGER},
+      #{record.shippingId,jdbcType=INTEGER}, #{record.payment,jdbcType=DECIMAL}, #{record.paymentType,jdbcType=INTEGER},
+      #{record.postage,jdbcType=INTEGER}, #{record.status,jdbcType=INTEGER}, #{record.paymentTime,jdbcType=TIMESTAMP},
+      #{record.sendTime,jdbcType=TIMESTAMP}, #{record.endTime,jdbcType=TIMESTAMP}, #{record.closeTime,jdbcType=TIMESTAMP},
+      now(), now())
+  </insert>
+  <insert id="insertSelective" parameterType="com.aiun.order.pojo.Order" >
+    insert into trade_order
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        id,
+      </if>
+      <if test="record.orderNo != null" >
+        order_no,
+      </if>
+      <if test="record.userId != null" >
+        user_id,
+      </if>
+      <if test="record.shippingId != null" >
+        shipping_id,
+      </if>
+      <if test="record.payment != null" >
+        payment,
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type,
+      </if>
+      <if test="record.postage != null" >
+        postage,
+      </if>
+      <if test="record.status != null" >
+        status,
+      </if>
+      <if test="record.paymentTime != null" >
+        payment_time,
+      </if>
+      <if test="record.sendTime != null" >
+        send_time,
+      </if>
+      <if test="record.endTime != null" >
+        end_time,
+      </if>
+      <if test="record.closeTime != null" >
+        close_time,
+      </if>
+      <if test="record.createTime != null" >
+        create_time,
+      </if>
+      <if test="record.updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNo != null" >
+        #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shippingId != null" >
+        #{record.shippingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payment != null" >
+        #{record.payment,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paymentType != null" >
+        #{record.paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.postage != null" >
+        #{record.postage,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentTime != null" >
+        #{record.paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendTime != null" >
+        #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.closeTime != null" >
+        #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiun.order.pojo.Order" >
+    update trade_order
+    <set >
+      <if test="record.orderNo != null" >
+        order_no = #{record.orderNo,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.shippingId != null" >
+        shipping_id = #{record.shippingId,jdbcType=INTEGER},
+      </if>
+      <if test="record.payment != null" >
+        payment = #{record.payment,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paymentType != null" >
+        payment_type = #{record.paymentType,jdbcType=INTEGER},
+      </if>
+      <if test="record.postage != null" >
+        postage = #{record.postage,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.paymentTime != null" >
+        payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendTime != null" >
+        send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null" >
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.closeTime != null" >
+        close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = now(),
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aiun.order.pojo.Order" >
+    update trade_order
+    set order_no = #{record.orderNo,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      shipping_id = #{record.shippingId,jdbcType=INTEGER},
+      payment = #{record.payment,jdbcType=DECIMAL},
+      payment_type = #{record.paymentType,jdbcType=INTEGER},
+      postage = #{record.postage,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      payment_time = #{record.paymentTime,jdbcType=TIMESTAMP},
+      send_time = #{record.sendTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      close_time = #{record.closeTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUserIdAndOrderNo" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+    from trade_order
+    where order_no = #{orderNo}
+    and user_id = #{userId}
+  </select>
+  <select id="selectByOrderNo" resultMap="BaseResultMap" parameterType="long">
+    select
+    <include refid="Base_Column_List"/>
+    from trade_order
+    where order_no = #{orderNo}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM trade_order
+    WHERE user_id = #{userId}
+    ORDER BY create_time DESC
+  </select>
+  <select id="selectAllOrder" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM trade_order
+    ORDER BY create_time DESC
+  </select>
+</mapper>

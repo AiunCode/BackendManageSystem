@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @FeignClient("backend-user")
 @RequestMapping("/user/")
 public interface UserFeign {
-    @PostMapping("query")
-    int checkAdminRole(@RequestBody User user);
+    @PostMapping("search")
+    int checkAdminRole(@RequestBody(required = false) User user);
 }

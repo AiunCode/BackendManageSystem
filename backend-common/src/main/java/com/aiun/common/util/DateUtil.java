@@ -1,7 +1,10 @@
 package com.aiun.common.util;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import org.apache.tomcat.util.buf.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.Date;
 
 /**
@@ -12,42 +15,37 @@ public class DateUtil {
     /**
      * 设置为常量，提高可扩展性
      */
-    private static final String DEFAULT_PATTERN = "yyyy-MM-dd";
-//    private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+    public static final String STANDARD_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-    private DateUtil() {
+    public static Date stringToDate(String dateTimeStr, String formatStr) {
+        org.joda.time.format.DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(formatStr);
+        DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
+
+        return dateTime.toDate();
     }
 
-    // 1.将日期转换成字符串
-    public static String dateToString(Date date, String pattern) {
-        // 判断pattern是否为空,利用工具类
-        if (pattern.isEmpty()) {
-            // 如果为空，设置默认格式
-            pattern = DEFAULT_PATTERN;
+    public static String dateToString(Date date, String formatStr) {
+        if (date == null) {
+            return "";
         }
+        DateTime dateTime = new DateTime(date);
 
-        SimpleDateFormat sd = new SimpleDateFormat();
-        sd.applyPattern(pattern);
-        String res = sd.format(date);
-        return res;
+        return dateTime.toString(formatStr);
     }
 
-    // 重载，只传一个参数
+    public static Date stringToDate(String dateTimeStr) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormat.forPattern(STANDARD_FORMAT);
+        DateTime dateTime = dateTimeFormatter.parseDateTime(dateTimeStr);
+
+        return dateTime.toDate();
+    }
+
     public static String dateToString(Date date) {
-        return DateUtil.dateToString(date, "DEFAULT_PATTERN");
-    }
-
-    // 2.字符串转成日期
-    public static Date stringToDate(String str, String pattern) throws ParseException {
-        // 判断pattern是否为空,利用工具类
-        if (pattern.isEmpty()) {
-            // 如果为空，设置默认格式
-            pattern = DEFAULT_PATTERN;
+        if (date == null) {
+            return "";
         }
+        DateTime dateTime = new DateTime(date);
 
-        SimpleDateFormat sd = new SimpleDateFormat();
-        sd.applyPattern(pattern);
-        Date res = sd.parse(str);
-        return res;
+        return dateTime.toString(STANDARD_FORMAT);
     }
 }

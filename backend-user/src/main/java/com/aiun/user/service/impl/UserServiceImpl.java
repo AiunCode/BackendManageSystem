@@ -95,10 +95,30 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public int checkAdminRole(User user) {
-        if (user != null && user.getRole() == Const.Role.ROLE_ADMIN) {
-            return Const.Role.ROLE_ADMIN;
+    public ServerResponse<User> getInformation(int userId) {
+        User user = userMapper.selectByPrimaryKey(userId);
+        if(user == null) {
+            return ServerResponse.createByErrorMessage("当前用户不存在");
         }
-        return Const.Role.ROLE_CUSTOMER;
+        user.setPassword(StringUtils.EMPTY);
+
+        return ServerResponse.createBySuccess(user);
+    }
+
+    @Override
+    public ServerResponse<String> resetPassword(String oldPassword, String newPassword, User user) {
+        //防止横向越权，要校验一下这个用户的旧密码，一定要指定是这个用户
+        //因为会查询一个count(1)，若不指定id，结果就是true
+        int resultCount = userMapper.checkPassword(MD5Util.MD5EncodeUtf8(oldPassword), user.getId());
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("旧密码错误");
+        }
+        user.setPassword(MD5Util.MD5EncodeUtf8(newPassword));
+        int updateCount = userMapper.updateByPrimaryKeySelective(user);
+        if (updateCount > 0) {
+            return ServerResponse.createBySuccessMessage("密码更新成功");
+        }
+
+        return ServerResponse.createByErrorMessage("密码更新失败");
     }
 }

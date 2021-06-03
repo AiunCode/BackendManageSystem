@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.aiun.shipping.mapper.ShippingMapper" >
+  <resultMap id="BaseResultMap" type="com.aiun.shipping.pojo.Shipping" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="receiver_name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_phone" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_mobile" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_province" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_city" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_district" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_address" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="receiver_zip" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="create_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+      <arg column="update_time" jdbcType="TIMESTAMP" javaType="java.util.Date" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, receiver_name, receiver_phone, receiver_mobile, receiver_province, receiver_city, 
+    receiver_district, receiver_address, receiver_zip, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from trade_shipping
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from trade_shipping
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.aiun.shipping.pojo.Shipping" useGeneratedKeys="true" keyProperty="id">
+    insert into trade_shipping (id, user_id, receiver_name,
+      receiver_phone, receiver_mobile, receiver_province, 
+      receiver_city, receiver_district, receiver_address, 
+      receiver_zip, create_time, update_time
+      )
+    values (#{record.id,jdbcType=INTEGER}, #{record.userId,jdbcType=INTEGER}, #{record.receiverName,jdbcType=VARCHAR},
+      #{record.receiverPhone,jdbcType=VARCHAR}, #{record.receiverMobile,jdbcType=VARCHAR}, #{record.receiverProvince,jdbcType=VARCHAR},
+      #{record.receiverCity,jdbcType=VARCHAR}, #{record.receiverDistrict,jdbcType=VARCHAR}, #{record.receiverAddress,jdbcType=VARCHAR},
+      #{record.receiverZip,jdbcType=VARCHAR}, now(), now()
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.aiun.shipping.pojo.Shipping" >
+    insert into trade_shipping
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        id,
+      </if>
+      <if test="record.userId != null" >
+        user_id,
+      </if>
+      <if test="record.receiverName != null" >
+        receiver_name,
+      </if>
+      <if test="record.receiverPhone != null" >
+        receiver_phone,
+      </if>
+      <if test="record.receiverMobile != null" >
+        receiver_mobile,
+      </if>
+      <if test="record.receiverProvince != null" >
+        receiver_province,
+      </if>
+      <if test="record.receiverCity != null" >
+        receiver_city,
+      </if>
+      <if test="record.receiverDistrict != null" >
+        receiver_district,
+      </if>
+      <if test="record.receiverAddress != null" >
+        receiver_address,
+      </if>
+      <if test="record.receiverZip != null" >
+        receiver_zip,
+      </if>
+      <if test="record.createTime != null" >
+        create_time,
+      </if>
+      <if test="record.updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="record.id != null" >
+        #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiverName != null" >
+        #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverPhone != null" >
+        #{record.receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverMobile != null" >
+        #{record.receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverProvince != null" >
+        #{record.receiverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverCity != null" >
+        #{record.receiverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverDistrict != null" >
+        #{record.receiverDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverAddress != null" >
+        #{record.receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverZip != null" >
+        #{record.receiverZip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        now(),
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.aiun.shipping.pojo.Shipping" >
+    update trade_shipping
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.receiverName != null" >
+        receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverPhone != null" >
+        receiver_phone = #{record.receiverPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverMobile != null" >
+        receiver_mobile = #{record.receiverMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverProvince != null" >
+        receiver_province = #{record.receiverProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverCity != null" >
+        receiver_city = #{record.receiverCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverDistrict != null" >
+        receiver_district = #{record.receiverDistrict,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverAddress != null" >
+        receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverZip != null" >
+        receiver_zip = #{record.receiverZip,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = now(),
+      </if>
+    </set>
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.aiun.shipping.pojo.Shipping" >
+    update trade_shipping
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{record.receiverPhone,jdbcType=VARCHAR},
+      receiver_mobile = #{record.receiverMobile,jdbcType=VARCHAR},
+      receiver_province = #{record.receiverProvince,jdbcType=VARCHAR},
+      receiver_city = #{record.receiverCity,jdbcType=VARCHAR},
+      receiver_district = #{record.receiverDistrict,jdbcType=VARCHAR},
+      receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      receiver_zip = #{record.receiverZip,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where id = #{record.id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByShippingIdUserId" parameterType="map">
+    delete from trade_shipping
+    where id = #{shippingId}
+    and user_id = #{userId}
+  </delete>
+  <update id="updateByShipping" parameterType="com.aiun.shipping.pojo.Shipping">
+    update trade_shipping
+    set receiver_name = #{record.receiverName,jdbcType=VARCHAR},
+      receiver_phone = #{record.receiverPhone,jdbcType=VARCHAR},
+      receiver_mobile = #{record.receiverMobile,jdbcType=VARCHAR},
+      receiver_province = #{record.receiverProvince,jdbcType=VARCHAR},
+      receiver_city = #{record.receiverCity,jdbcType=VARCHAR},
+      receiver_district = #{record.receiverDistrict,jdbcType=VARCHAR},
+      receiver_address = #{record.receiverAddress,jdbcType=VARCHAR},
+      receiver_zip = #{record.receiverZip,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = now()
+    where id = #{record.id,jdbcType=INTEGER}
+    and user_id = #{record.userId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByShippingIdUserId" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List"/>
+     from trade_shipping
+     where id = #{shippingId}
+     and user_id = #{userId}
+  </select>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="int">
+    select
+    <include refid="Base_Column_List"/>
+     from trade_shipping
+     where user_id = #{userId}
+  </select>
+</mapper>

@@ -59,5 +59,5 @@ public interface IProductService {
      */
     Product findById(Integer id);
 
-    int updateBySelective(Product product);
+    void updateStockById(Integer id, int stock);
 }

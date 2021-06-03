@@ -1,7 +1,7 @@
 server:
  port: 8084                  # 项目访问端口
  servlet:
-  context-path: /user       # 项目访问路径
+  context-path: /       # 项目访问路径
 
 eureka:
   client:

@@ -132,8 +132,10 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public int updateBySelective(Product product) {
-        return productMapper.updateByPrimaryKeySelective(product);
+    public void updateStockById(Integer id, int stock) {
+        Product product = productMapper.selectByPrimaryKey(id);
+        product.setStock(stock);
+        productMapper.updateByPrimaryKeySelective(product);
     }
 
     /**

@@ -25,6 +25,7 @@
     <modules>
         <module>backend-service-product-api</module>
         <module>backend-service-user-api</module>
+        <module>backend-service-shipping-api</module>
     </modules>
 
     <dependencies>

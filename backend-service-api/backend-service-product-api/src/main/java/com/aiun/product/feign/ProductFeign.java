@@ -10,6 +10,6 @@ public interface ProductFeign {
     @GetMapping("{id}")
     Product findById(@PathVariable(name="id") Integer id);
 
-    @PostMapping("update")
-    int updateBySelective(@RequestBody Product product);
+    @RequestMapping(value = "update",method = RequestMethod.GET)
+    void updateStockById(@RequestParam("id") Integer id, @RequestParam("stock") int stock);
 }

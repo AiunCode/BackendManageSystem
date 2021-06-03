@@ -31,9 +31,18 @@ public interface IUserService {
     ServerResponse<String> checkValid(String str, String type);
 
     /**
-     * 检查是否是管理员
+     * 获取用户信息
+     * @param userId
+     * @return
+     */
+    ServerResponse<User> getInformation(int userId);
+
+    /**
+     * 更改密码
+     * @param oldPassword
+     * @param newPassword
      * @param user
      * @return
      */
-    int checkAdminRole(User user);
+    ServerResponse<String> resetPassword(String oldPassword, String newPassword, User user);
 }

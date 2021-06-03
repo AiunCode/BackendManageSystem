@@ -34,8 +34,6 @@ public class ProductController {
     @Value("${image.localhost}")
     private String mageHost;
     @Autowired
-    private UserFeign userFeign;
-    @Autowired
     private IProductService iProductService;
     @Autowired
     private IFileService iFileService;
@@ -52,7 +50,7 @@ public class ProductController {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (userFeign.checkAdminRole(user) == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == Const.Role.ROLE_ADMIN) {
                 return iProductService.saveOrUpdateProduct(product);
             } else {
                 return ServerResponse.createByErrorMessage("无权限操作");
@@ -71,7 +69,7 @@ public class ProductController {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (userFeign.checkAdminRole(user) == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == Const.Role.ROLE_ADMIN) {
                 String targetFileName = iFileService.upload(file, mageHost);
                 String url =  mageHost + targetFileName;
 
@@ -84,7 +82,7 @@ public class ProductController {
                 return ServerResponse.createByErrorMessage("无权限操作");
             }
         }
-        return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), "用户未登录，需要登录管理员");
+        return hasLogin;
     }
 
     /**
@@ -93,7 +91,8 @@ public class ProductController {
      * @return 返回的产品详情信息
      */
     @RequestMapping("detail")
-    public ServerResponse<ProductDetailVo> detail(Integer productId) {        return iProductService.getProductDetail(productId);
+    public ServerResponse<ProductDetailVo> detail(Integer productId) {
+        return iProductService.getProductDetail(productId);
     }
 
     /**
@@ -105,7 +104,7 @@ public class ProductController {
      * @param orderBy 排序规则
      * @return 返回具体信息
      */
-    @RequestMapping("list.do")
+    @RequestMapping("list")
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -147,12 +146,13 @@ public class ProductController {
 
     /**
      * 对外提供的服务
-     * 更新产品信息
-     * @param product 产品类
+     * 更新产品库存数量信息
+     * @param id 产品 id
+     * @param stock 产品库存
      * @return 操作影响行数
      */
-    @PostMapping("update")
-    public int updateBySelective(@RequestBody Product product){
-        return iProductService.updateBySelective(product);
+    @GetMapping("update")
+    public void updateStockById(@RequestParam("id") Integer id, @RequestParam("stock") int stock){
+        iProductService.updateStockById(id, stock);
     }
 }
