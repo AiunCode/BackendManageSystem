@@ -67,8 +67,8 @@ public class OrderController {
     }
     /**
      * 获取购物车中已经选中的商品信息
-     * @param request
-     * @return
+     * @param request 请求
+     * @return 返回结果
      */
     @RequestMapping("get_order_cart_product")
     public ServerResponse getOrderCartProduct(HttpServletRequest request) {
@@ -122,11 +122,11 @@ public class OrderController {
     }
     /**
      * 订单查询
-     * @param request
-     * @param orderNo
-     * @param pageNum
-     * @param pageSize
-     * @return
+     * @param request 请求
+     * @param orderNo 订单号
+     * @param pageNum 当前页
+     * @param pageSize 页大小
+     * @return 返回结果
      */
     @RequestMapping("manage/search")
     public ServerResponse<PageInfo> orderSearch(HttpServletRequest request, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {

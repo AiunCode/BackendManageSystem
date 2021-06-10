@@ -1,0 +1,7 @@
+spring:
+  cloud:
+    config:
+      uri: http://localhost:8081    # 指定要连接的 config server
+      label: master
+      name: eureka-server-two       # 指定要从 git 读取的文件
+      profile: dev                  # 环境选择

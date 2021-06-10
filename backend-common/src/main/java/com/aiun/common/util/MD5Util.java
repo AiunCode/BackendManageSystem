@@ -1,5 +1,7 @@
 package com.aiun.common.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 
 import java.security.MessageDigest;
@@ -10,6 +12,7 @@ import java.security.MessageDigest;
 public class MD5Util {
     @Value("${password.salt}")
     private static String passwordSalt;
+    private static Logger logger = LoggerFactory.getLogger(MD5Util.class);
 
     private static String byteArrayToHexString(byte b[]) {
         StringBuffer resultSb = new StringBuffer();
@@ -48,6 +51,7 @@ public class MD5Util {
                 resultString = byteArrayToHexString(md.digest(resultString.getBytes(charsetname)));
             }
         } catch (Exception exception) {
+            logger.error("MD5Encode error", exception);
         }
         return resultString.toUpperCase();
     }

@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
+    <!--继承BackendManageSystem依赖-->
     <parent>
         <groupId>com.aiun</groupId>
         <artifactId>BackendManageSystem</artifactId>
@@ -10,66 +10,25 @@
     </parent>
 
     <groupId>com.aiun</groupId>
-    <artifactId>backend-product</artifactId>
+    <artifactId>backend-server8762</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>backend-product</name>
-    <description>Demo project for Spring Boot</description>
+    <name>backend-server8762</name>
+    <description>注册中心</description>
 
     <properties>
         <java.version>1.8</java.version>
         <spring-cloud.version>Hoxton.SR11</spring-cloud.version>
     </properties>
+    
     <dependencies>
-        <!--backend common 依赖-->
-        <dependency>
-            <groupId>com.aiun</groupId>
-            <artifactId>backend-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <!-- user api 依赖 -->
-        <dependency>
-            <groupId>com.aiun</groupId>
-            <artifactId>backend-service-user-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
         <!--config client 依赖 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-client</artifactId>
         </dependency>
-        <!-- thymeleaf 页面模板引擎-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <!--spring boot web 依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <!-- mybatis 依赖-->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-        <!-- pagehelper 分页依赖 -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-        </dependency>
-        <!--mysql 依赖-->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <!--druid 连接池依赖-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-        </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -97,4 +56,5 @@
             </plugin>
         </plugins>
     </build>
+
 </project>

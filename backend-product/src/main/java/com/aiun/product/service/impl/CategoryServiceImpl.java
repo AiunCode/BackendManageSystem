@@ -4,14 +4,14 @@ import com.aiun.common.ServerResponse;
 import com.aiun.product.mapper.CategoryMapper;
 import com.aiun.product.pojo.Category;
 import com.aiun.product.service.ICategoryService;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -75,9 +75,9 @@ public class CategoryServiceImpl implements ICategoryService {
      */
     @Override
     public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId) {
-        Set<Category> categorySet = Sets.newHashSet();
+        Set<Category> categorySet = new HashSet<>();
         findChildCategory(categorySet, categoryId);
-        List<Integer> categoryIdList = Lists.newArrayList();
+        List<Integer> categoryIdList = new ArrayList<>();
         if (categoryId != null) {
             for(Category categoryItem : categorySet) {
                 categoryIdList.add(categoryItem.getId());

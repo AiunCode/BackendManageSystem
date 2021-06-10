@@ -3,24 +3,27 @@
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
     <!--定义日志文件的存储地址-->
-    <property name="LOG_HOME" value="logs"/>
+    <property name="LOG_HOME" value="F:/Work/logs"/>
+    <!--定义日志文件的输出样式-->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
 
-    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名 -->
+    <appender name="STDOUT_APPENDER" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <!--<pattern>%d %p (%file:%line\)- %m%n</pattern>-->
-            <!--格式化输出：%d:表示日期    %thread:表示线程名     %-5level:级别从左显示5个字符宽度  %msg:日志消息    %n:是换行符-->
+            <!--格式化输出：%d:表示日期   %thread:表示线程名  %-5level:级别从左显示5个字符宽度  %msg:日志消息   %n:是换行符-->
             <pattern>1-%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
+            <!--高于level中设置的级别，则打印日志-->
             <onMatch>ACCEPT</onMatch>
+            <!--低于level中设置的级别，则屏蔽日志-->
             <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
     <!-- 按照每天生成日志文件 -->
-    <appender name="ACCESS" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="ACCESS_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!--日志文件输出的文件名-->
             <FileNamePattern>${LOG_HOME}/access_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
@@ -28,12 +31,13 @@
             <MaxHistory>30</MaxHistory>
             <!--日志文件最大的大小-->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <!--按照文件大小来进行拆分-->
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <pattern>${PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -43,7 +47,7 @@
         </filter>
     </appender>
     
-    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <appender name="ERROR_APPENDER" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${LOG_HOME}/errors_%d{yyyy-MM-dd}.%i.log</FileNamePattern>
             <MaxHistory>30</MaxHistory>
@@ -52,7 +56,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+            <pattern>${PATTERN}</pattern>
             <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
@@ -62,21 +66,26 @@
         </filter>
     </appender>
     
-
+    <!--自定义 log -->
     <logger name="org.springframework.web" level="ERROR"/>
     <logger name="org.springboot.sample" level="ERROR"/>
     <logger name="com.aiun" level="DEBUG"/>
 
+    <!--配置异步日志-->
+    <appender name="ASYNC_APPENDER" class="ch.qos.logback.classic.AsyncAppender">
+        <appender-ref ref="ERROR_APPENDER"/>
+    </appender>
+
     <!-- 开发、测试环境 -->
     <springProfile name="dev,test">
         <root level="DEBUG">
-			<appender-ref ref="ACCESS" />
+			<appender-ref ref="ACCESS_APPENDER" />
 		</root>
     </springProfile>
     
 	<!-- 所有环境都要记录错误日志 -->
     <root level="ERROR">
-        <appender-ref ref="ERROR"/>
+        <appender-ref ref="ASYNC_APPENDER"/>
     </root>
 
 </configuration>
