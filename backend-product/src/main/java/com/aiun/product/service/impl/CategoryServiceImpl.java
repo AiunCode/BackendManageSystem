@@ -79,9 +79,11 @@ public class CategoryServiceImpl implements ICategoryService {
         findChildCategory(categorySet, categoryId);
         List<Integer> categoryIdList = new ArrayList<>();
         if (categoryId != null) {
-            for(Category categoryItem : categorySet) {
-                categoryIdList.add(categoryItem.getId());
-            }
+//            for(Category categoryItem : categorySet) {
+//                categoryIdList.add(categoryItem.getId());
+//            }
+            // Lambda
+            categorySet.forEach(e->categoryIdList.add(e.getId()));
         }
         return ServerResponse.createBySuccess(categoryIdList);
     }
@@ -97,9 +99,12 @@ public class CategoryServiceImpl implements ICategoryService {
         }
         //查找子节点，要有退出条件
         List<Category> categoryList = categoryMapper.selectCategoryChildrenByParentId(categoryId);
-        for(Category categoryItem : categoryList) {
-            findChildCategory(categorySet, categoryItem.getId());
-        }
+//        for(Category categoryItem : categoryList) {
+//            findChildCategory(categorySet, categoryItem.getId());
+//        }
+        // Lambda
+        categoryList.forEach(e->findChildCategory(categorySet, e.getId()));
+
         return categorySet;
     }
 }

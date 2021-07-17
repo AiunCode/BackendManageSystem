@@ -145,10 +145,16 @@ public class ProductServiceImpl implements IProductService {
      */
     private ServerResponse<PageInfo> getPageInfoServerResponse(List<Product> productList) {
         List<ProductListVo> productListVoList = Lists.newArrayList();
-        for (Product productItem : productList) {
-            ProductListVo productListVo = assembleProductListVo(productItem);
+//        for (Product productItem : productList) {
+//            ProductListVo productListVo = assembleProductListVo(productItem);
+//            productListVoList.add(productListVo);
+//        }
+        // Lambda
+        productList.forEach(e->{
+            ProductListVo productListVo = assembleProductListVo(e);
             productListVoList.add(productListVo);
-        }
+        });
+
         PageInfo pageResult = new PageInfo(productList);
         pageResult.setList(productListVoList);
 

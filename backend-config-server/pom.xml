@@ -11,6 +11,7 @@
     <groupId>com.aiun</groupId>
     <artifactId>backend-config-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>backend-config-server</name>  
 
     <description>Demo project for Spring Boot</description>

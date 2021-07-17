@@ -7,6 +7,8 @@ import com.aiun.common.util.JsonUtil;
 import com.aiun.order.service.IOrderService;
 import com.aiun.user.pojo.User;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -25,6 +27,7 @@ import java.util.concurrent.TimeUnit;
  * 订单控制层
  * @author lenovo
  */
+@Api(tags = "订单系统相关接口")
 @RestController
 @FeignClient
 @RequestMapping("/order/")
@@ -41,6 +44,7 @@ public class OrderController {
      * @return 结果
      */
     @RequestMapping("create")
+    @ApiOperation(value = "创建订单")
     public ServerResponse create(HttpServletRequest request, Integer shippingId) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -57,6 +61,7 @@ public class OrderController {
      * @return 返回结果
      */
     @RequestMapping("cancel")
+    @ApiOperation(value = "取消订单")
     public ServerResponse cancel(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -71,6 +76,7 @@ public class OrderController {
      * @return 返回结果
      */
     @RequestMapping("get_order_cart_product")
+    @ApiOperation(value = "获取购物车中已经选中的商品信息")
     public ServerResponse getOrderCartProduct(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -87,6 +93,7 @@ public class OrderController {
      * @return 订单详情
      */
     @RequestMapping("detail")
+    @ApiOperation(value = "获取订单详细信息")
     public ServerResponse detail(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -108,6 +115,7 @@ public class OrderController {
      * @return 返回订单列表信息
      */
     @RequestMapping("list")
+    @ApiOperation(value = "获取订单列表信息")
     public ServerResponse list(HttpServletRequest request, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -129,6 +137,7 @@ public class OrderController {
      * @return 返回结果
      */
     @RequestMapping("manage/search")
+    @ApiOperation(value = "订单查询")
     public ServerResponse<PageInfo> orderSearch(HttpServletRequest request, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -149,6 +158,7 @@ public class OrderController {
      * @return 发货信息
      */
     @RequestMapping("send_goods")
+    @ApiOperation(value = "发货")
     public ServerResponse<String> orderSendGoods(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {

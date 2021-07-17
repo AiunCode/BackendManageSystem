@@ -1,146 +1,51 @@
 package com.aiun.shipping.pojo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Date;
 
+/**
+ * 收货地址实体类
+ * @author lenovo
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@ApiModel(value = "Shipping对象", description = "收货地址表")
 public class Shipping {
+    @ApiModelProperty(value = "收货地址主键")
     private Integer id;
-
+    @ApiModelProperty(value = "用户 id")
     private Integer userId;
-
+    @ApiModelProperty(value = "收货人")
     private String receiverName;
-
+    @ApiModelProperty(value = "收货人固定电话")
     private String receiverPhone;
-
+    @ApiModelProperty(value = "收货人移动电话")
     private String receiverMobile;
-
+    @ApiModelProperty(value = "收货人省份")
     private String receiverProvince;
-
+    @ApiModelProperty(value = "收货人城市")
     private String receiverCity;
-
+    @ApiModelProperty(value = "收货人详细地址")
     private String receiverDistrict;
-
+    @ApiModelProperty(value = "收货人地址")
     private String receiverAddress;
-
+    @ApiModelProperty(value = "收货人邮箱")
     private String receiverZip;
     @JsonFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value = "创建时间")
     private Date createTime;
     @JsonFormat(pattern="yyyy-MM-dd")
+    @ApiModelProperty(value = "更新时间")
     private Date updateTime;
-
-    public Shipping(Integer id, Integer userId, String receiverName, String receiverPhone, String receiverMobile, String receiverProvince, String receiverCity, String receiverDistrict, String receiverAddress, String receiverZip, Date createTime, Date updateTime) {
-        this.id = id;
-        this.userId = userId;
-        this.receiverName = receiverName;
-        this.receiverPhone = receiverPhone;
-        this.receiverMobile = receiverMobile;
-        this.receiverProvince = receiverProvince;
-        this.receiverCity = receiverCity;
-        this.receiverDistrict = receiverDistrict;
-        this.receiverAddress = receiverAddress;
-        this.receiverZip = receiverZip;
-        this.createTime = createTime;
-        this.updateTime = updateTime;
-    }
-
-    public Shipping() {
-        super();
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
-
-    public String getReceiverName() {
-        return receiverName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName == null ? null : receiverName.trim();
-    }
-
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
-
-    public void setReceiverPhone(String receiverPhone) {
-        this.receiverPhone = receiverPhone == null ? null : receiverPhone.trim();
-    }
-
-    public String getReceiverMobile() {
-        return receiverMobile;
-    }
-
-    public void setReceiverMobile(String receiverMobile) {
-        this.receiverMobile = receiverMobile == null ? null : receiverMobile.trim();
-    }
-
-    public String getReceiverProvince() {
-        return receiverProvince;
-    }
-
-    public void setReceiverProvince(String receiverProvince) {
-        this.receiverProvince = receiverProvince == null ? null : receiverProvince.trim();
-    }
-
-    public String getReceiverCity() {
-        return receiverCity;
-    }
-
-    public void setReceiverCity(String receiverCity) {
-        this.receiverCity = receiverCity == null ? null : receiverCity.trim();
-    }
-
-    public String getReceiverDistrict() {
-        return receiverDistrict;
-    }
-
-    public void setReceiverDistrict(String receiverDistrict) {
-        this.receiverDistrict = receiverDistrict == null ? null : receiverDistrict.trim();
-    }
-
-    public String getReceiverAddress() {
-        return receiverAddress;
-    }
-
-    public void setReceiverAddress(String receiverAddress) {
-        this.receiverAddress = receiverAddress == null ? null : receiverAddress.trim();
-    }
-
-    public String getReceiverZip() {
-        return receiverZip;
-    }
-
-    public void setReceiverZip(String receiverZip) {
-        this.receiverZip = receiverZip == null ? null : receiverZip.trim();
-    }
-
-    public Date getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
 }

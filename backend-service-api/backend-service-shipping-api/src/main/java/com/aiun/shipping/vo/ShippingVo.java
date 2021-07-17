@@ -1,86 +1,37 @@
 package com.aiun.shipping.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 /**
  * @author lenovo
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@ApiModel(value = "收货地址展示信息")
 public class ShippingVo {
+    @ApiModelProperty(value = "收货人")
     private String receiverName;
-
+    @ApiModelProperty(value = "收货人固定电话")
     private String receiverPhone;
-
+    @ApiModelProperty(value = "收货人移动电话")
     private String receiverMobile;
-
+    @ApiModelProperty(value = "收货人省份")
     private String receiverProvince;
-
+    @ApiModelProperty(value = "收货人城市")
     private String receiverCity;
-
+    @ApiModelProperty(value = "收货人详细地址")
     private String receiverDistrict;
-
+    @ApiModelProperty(value = "收货人地址")
     private String receiverAddress;
-
+    @ApiModelProperty(value = "收货人邮箱")
     private String receiverZip;
-
-    public String getReceiverName() {
-        return receiverName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
-
-    public void setReceiverPhone(String receiverPhone) {
-        this.receiverPhone = receiverPhone;
-    }
-
-    public String getReceiverMobile() {
-        return receiverMobile;
-    }
-
-    public void setReceiverMobile(String receiverMobile) {
-        this.receiverMobile = receiverMobile;
-    }
-
-    public String getReceiverProvince() {
-        return receiverProvince;
-    }
-
-    public void setReceiverProvince(String receiverProvince) {
-        this.receiverProvince = receiverProvince;
-    }
-
-    public String getReceiverCity() {
-        return receiverCity;
-    }
-
-    public void setReceiverCity(String receiverCity) {
-        this.receiverCity = receiverCity;
-    }
-
-    public String getReceiverDistrict() {
-        return receiverDistrict;
-    }
-
-    public void setReceiverDistrict(String receiverDistrict) {
-        this.receiverDistrict = receiverDistrict;
-    }
-
-    public String getReceiverAddress() {
-        return receiverAddress;
-    }
-
-    public void setReceiverAddress(String receiverAddress) {
-        this.receiverAddress = receiverAddress;
-    }
-
-    public String getReceiverZip() {
-        return receiverZip;
-    }
-
-    public void setReceiverZip(String receiverZip) {
-        this.receiverZip = receiverZip;
-    }
 }

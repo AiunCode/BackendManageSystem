@@ -42,8 +42,6 @@ public class OrderServiceImpl implements IOrderService {
     private CartMapper cartMapper;
     @Autowired
     private ProductFeign productFeign;
-//    @Autowired
-//    private ShippingMapper shippingMapper;
     @Autowired
     private ShippingFeign shippingFeign;
 
@@ -68,9 +66,12 @@ public class OrderServiceImpl implements IOrderService {
         if (order == null) {
             return ServerResponse.createByErrorMessage("生成订单错误");
         }
-        for (OrderItem item : orderItemList) {
-            item.setOrderNo(order.getOrderNo());
-        }
+//        for (OrderItem item : orderItemList) {
+//            item.setOrderNo(order.getOrderNo());
+//        }
+        //换 Lambda 表达式
+        orderItemList.forEach(e->e.setOrderNo(order.getOrderNo()));
+
         //mybatis批量插入
         orderItemMapper.batchInsert(orderItemList);
         //生成成功，减少产品的库存
@@ -117,10 +118,17 @@ public class OrderServiceImpl implements IOrderService {
         List<OrderItem> orderItemList = (List<OrderItem>) serverResponse.getData();
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
         BigDecimal payment = new BigDecimal("0");
+
         for (OrderItem orderItem : orderItemList) {
             payment = BigDecimalUtil.add(payment.doubleValue(), orderItem.getTotalPrice().doubleValue());
             orderItemVoList.add(assembleOrderItemVo(orderItem));
         }
+
+        //TODO Lambda 表达式引用外部变量问题
+//        orderItemList.forEach(e->{
+//            payment = BigDecimalUtil.add(payment.doubleValue(), e.getTotalPrice().doubleValue());
+//            orderItemVoList.add(assembleOrderItemVo(e));
+//        });
 
         orderProductVo.setProductTotalPrice(payment);
         orderProductVo.setOrderItemVoList(orderItemVoList);
@@ -230,6 +238,8 @@ public class OrderServiceImpl implements IOrderService {
             orderItem.setTotalPrice(BigDecimalUtil.mul(product.getPrice().doubleValue(), cartItem.getQuantity().doubleValue()));
             orderItemList.add(orderItem);
         }
+        //TODO 用 Lambda 表达式
+
         return ServerResponse.createBySuccess(orderItemList);
     }
 
@@ -286,10 +296,15 @@ public class OrderServiceImpl implements IOrderService {
      * @param orderItemList 订单详情列表
      */
     private void reduceProductStock(List<OrderItem> orderItemList) {
-        for (OrderItem orderItem : orderItemList) {
-            Product product = productFeign.findById(orderItem.getProductId());
-            productFeign.updateStockById(orderItem.getProductId(), product.getStock() - orderItem.getQuantity());
-        }
+//        for (OrderItem orderItem : orderItemList) {
+//            Product product = productFeign.findById(orderItem.getProductId());
+//            productFeign.updateStockById(orderItem.getProductId(), product.getStock() - orderItem.getQuantity());
+//        }
+
+        orderItemList.forEach(e->{
+            Product product = productFeign.findById(e.getProductId());
+            productFeign.updateStockById(e.getProductId(), product.getStock() - e.getQuantity());
+        });
     }
 
     /**
@@ -297,9 +312,13 @@ public class OrderServiceImpl implements IOrderService {
      * @param cartList 购物车列表
      */
     private void cleanCart(List<Cart> cartList) {
-        for (Cart cart : cartList) {
-            cartMapper.deleteByPrimaryKey(cart.getId());
-        }
+//        for (Cart cart : cartList) {
+//            cartMapper.deleteByPrimaryKey(cart.getId());
+//        }
+
+        cartList.forEach(e->{
+            cartMapper.deleteByPrimaryKey(e.getId());
+        });
     }
 
     /**
@@ -332,10 +351,16 @@ public class OrderServiceImpl implements IOrderService {
         orderVo.setImageHost(mageHost);
 
         List<OrderItemVo> orderItemVoList = Lists.newArrayList();
-        for (OrderItem orderItem : orderItemList) {
-            OrderItemVo orderItemVo = assembleOrderItemVo(orderItem);
+//        for (OrderItem orderItem : orderItemList) {
+//            OrderItemVo orderItemVo = assembleOrderItemVo(orderItem);
+//            orderItemVoList.add(orderItemVo);
+//        }
+
+        orderItemList.forEach(e->{
+            OrderItemVo orderItemVo = assembleOrderItemVo(e);
             orderItemVoList.add(orderItemVo);
-        }
+        });
+
         orderVo.setOrderItemVoList(orderItemVoList);
         return orderVo;
     }
@@ -396,6 +421,9 @@ public class OrderServiceImpl implements IOrderService {
             OrderVo orderVo = assembleOrderVo(order, orderItemList);
             orderVoList.add(orderVo);
         }
+
+        //TODO 用 Lambda 表达式
+
         return orderVoList;
     }
 }

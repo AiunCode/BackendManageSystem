@@ -7,6 +7,8 @@ import com.aiun.common.util.JsonUtil;
 import com.aiun.order.service.ICartService;
 import com.aiun.order.vo.CartVo;
 import com.aiun.user.pojo.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,6 +24,7 @@ import java.util.concurrent.TimeUnit;
  * 购物车控制层
  * @author lenovo
  */
+@Api(tags = "购物车接口")
 @RestController
 @RequestMapping("/cart/")
 public class CartController {
@@ -37,6 +40,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("add")
+    @ApiOperation(value = "购物车添加商品功能")
     public ServerResponse<CartVo> add(HttpServletRequest request, Integer productId, Integer count) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -54,6 +58,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("update")
+    @ApiOperation(value = "更新购物车商品功能")
     public ServerResponse<CartVo> update(HttpServletRequest request, Integer productId, Integer count) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -71,6 +76,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("delete_product")
+    @ApiOperation(value = "删除购物车商品")
     public ServerResponse<CartVo> deleteProduct(HttpServletRequest request, String productIds) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -87,6 +93,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("list")
+    @ApiOperation(value = "查询购物车商品列表")
     public ServerResponse<CartVo> list(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -103,6 +110,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("select_all")
+    @ApiOperation(value = "购物车全选")
     public ServerResponse<CartVo> selectAll(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -118,6 +126,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("un_select_all")
+    @ApiOperation(value = "反选")
     public ServerResponse<CartVo> unSelectAll(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -133,6 +142,7 @@ public class CartController {
      * @return 封装好的购物车 VO
      */
     @RequestMapping("select")
+    @ApiOperation(value = "单独选")
     public ServerResponse<CartVo> select(HttpServletRequest request, Integer productId) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -149,6 +159,7 @@ public class CartController {
      */
     @RequestMapping("un_select")
     @ResponseBody
+    @ApiOperation(value = "单独反选")
     public ServerResponse<CartVo> unSelect(HttpServletRequest request, Integer productId) {
         ServerResponse hasLogin = loginHasExpired(request);
 
@@ -165,6 +176,7 @@ public class CartController {
      */
     @RequestMapping("get_cart_product_count")
     @ResponseBody
+    @ApiOperation(value = "查询当前用户购物车里产品的数量")
     public ServerResponse<Integer> getCartProductCount(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
 

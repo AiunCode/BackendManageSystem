@@ -22,6 +22,7 @@
         <module>backend-user</module>
         <module>backend-service-api</module>
         <module>backend-shipping</module>
+        <module>backend-config-server</module>
     </modules>
 
     <!--继承spring-boot-starter-parent依赖-->

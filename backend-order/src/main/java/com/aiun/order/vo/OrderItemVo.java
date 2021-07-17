@@ -1,88 +1,39 @@
 package com.aiun.order.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.math.BigDecimal;
 
 /**
  * @author lenovo
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@ApiModel(value = "订单详情前端展示信息类")
 public class OrderItemVo {
+    @ApiModelProperty(value = "订单号")
     private Long orderNo;
-
+    @ApiModelProperty(value = "产品 id")
     private Integer productId;
-
+    @ApiModelProperty(value = "产品名")
     private String productName;
-
+    @ApiModelProperty(value = "产品图")
     private String productImage;
-
+    @ApiModelProperty(value = "当前产品的单价")
     private BigDecimal currentUnitPrice;
-
+    @ApiModelProperty(value = "数量")
     private Integer quantity;
-
+    @ApiModelProperty(value = "产品总价")
     private BigDecimal totalPrice;
-
+    @ApiModelProperty(value = "创建时间")
     private String createTime;
-
-    public Long getOrderNo() {
-        return orderNo;
-    }
-
-    public void setOrderNo(Long orderNo) {
-        this.orderNo = orderNo;
-    }
-
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getProductImage() {
-        return productImage;
-    }
-
-    public void setProductImage(String productImage) {
-        this.productImage = productImage;
-    }
-
-    public BigDecimal getCurrentUnitPrice() {
-        return currentUnitPrice;
-    }
-
-    public void setCurrentUnitPrice(BigDecimal currentUnitPrice) {
-        this.currentUnitPrice = currentUnitPrice;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public BigDecimal getTotalPrice() {
-        return totalPrice;
-    }
-
-    public void setTotalPrice(BigDecimal totalPrice) {
-        this.totalPrice = totalPrice;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
 }

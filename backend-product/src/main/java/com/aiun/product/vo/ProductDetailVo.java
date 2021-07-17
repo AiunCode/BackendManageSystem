@@ -1,133 +1,48 @@
 package com.aiun.product.vo;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
 import java.math.BigDecimal;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
+@Accessors(chain = true)
+@ApiModel(value = "产品详情展示信息")
 public class ProductDetailVo {
+    @ApiModelProperty(value = "主键")
     private Integer id;
+    @ApiModelProperty(value = "分类 id")
     private Integer categoryId;
+    @ApiModelProperty(value = "商品名")
     private String name;
+    @ApiModelProperty(value = "商品标题")
     private String subtitle;
+    @ApiModelProperty(value = "主图")
     private String mainImage;
+    @ApiModelProperty(value = "副图")
     private String SubImages;
+    @ApiModelProperty(value = "产品详情")
     private String detail;
+    @ApiModelProperty(value = "产品价格")
     private BigDecimal price;
+    @ApiModelProperty(value = "产品库存")
     private Integer stock;
+    @ApiModelProperty(value = "产品状态")
     private Integer status;
+    @ApiModelProperty(value = "创建时间")
     private String createTime;
+    @ApiModelProperty(value = "更新时间")
     private String updateTime;
-
+    @ApiModelProperty(value = "主图地址")
     private String imageHost;
+    @ApiModelProperty(value = "父分类 id")
     private Integer parentCategoryId;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Integer getCategoryId() {
-        return categoryId;
-    }
-
-    public void setCategoryId(Integer categoryId) {
-        this.categoryId = categoryId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
-    public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle;
-    }
-
-    public String getMainImage() {
-        return mainImage;
-    }
-
-    public void setMainImage(String mainImage) {
-        this.mainImage = mainImage;
-    }
-
-    public String getSubImages() {
-        return SubImages;
-    }
-
-    public void setSubImages(String subImages) {
-        SubImages = subImages;
-    }
-
-    public String getDetail() {
-        return detail;
-    }
-
-    public void setDetail(String detail) {
-        this.detail = detail;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getStock() {
-        return stock;
-    }
-
-    public void setStock(Integer stock) {
-        this.stock = stock;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
-    public String getCreateTime() {
-        return createTime;
-    }
-
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
-    }
-
-    public String getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public String getImageHost() {
-        return imageHost;
-    }
-
-    public void setImageHost(String imageHost) {
-        this.imageHost = imageHost;
-    }
-
-    public Integer getParentCategoryId() {
-        return parentCategoryId;
-    }
-
-    public void setParentCategoryId(Integer parentCategoryId) {
-        this.parentCategoryId = parentCategoryId;
-    }
 }
