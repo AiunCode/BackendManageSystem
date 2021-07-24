@@ -17,7 +17,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @ApiModel(value = "收货地址展示信息")
-public class ShippingVo {
+public class ShippingVO {
     @ApiModelProperty(value = "收货人")
     private String receiverName;
     @ApiModelProperty(value = "收货人固定电话")

@@ -20,9 +20,9 @@ import java.util.List;
 @Accessors(chain = true)
 @EqualsAndHashCode
 @ApiModel(value = "购物车前端展示信息类")
-public class CartVo {
+public class CartVO {
     @ApiModelProperty(value = "购物车产品信息列表")
-    private List<CartProductVo> cartProductVoList;
+    private List<CartProductVO> cartProductVOList;
     @ApiModelProperty(value = "购物车产品总价")
     private BigDecimal cartTotalPrice;
     /**

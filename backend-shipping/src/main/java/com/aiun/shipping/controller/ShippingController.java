@@ -1,13 +1,15 @@
 package com.aiun.shipping.controller;
 
-import com.aiun.common.Const;
+import com.aiun.common.constant.UserConst;
 import com.aiun.common.ResponseCode;
 import com.aiun.common.ServerResponse;
-import com.aiun.common.util.JsonUtil;
+import com.aiun.common.util.JsonUtils;
 import com.aiun.shipping.pojo.Shipping;
 import com.aiun.shipping.service.IShippingService;
 import com.aiun.user.pojo.User;
 import com.github.pagehelper.PageInfo;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -21,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  * 收货地址
  * @author lenovo
  */
+@Api(tags = "收获地址相关接口")
 @RestController
 @RequestMapping("/shipping/")
 public class ShippingController {
@@ -35,7 +38,8 @@ public class ShippingController {
      * @param shipping 地址信息
      * @return 返回结果
      */
-    @RequestMapping("add")
+    @PostMapping("add")
+    @ApiOperation(value = "增加收货地址")
     public ServerResponse add(HttpServletRequest request, Shipping shipping) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -51,7 +55,8 @@ public class ShippingController {
      * @param shippingId 地址 id
      * @return 返回结果
      */
-    @RequestMapping("del")
+    @DeleteMapping("del")
+    @ApiOperation(value = "删除收货地址")
     public ServerResponse del(HttpServletRequest request, Integer shippingId) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -67,7 +72,8 @@ public class ShippingController {
      * @param shipping 地址信息
      * @return 返回结果
      */
-    @RequestMapping("update")
+    @PostMapping("update")
+    @ApiOperation(value = "更新收货地址")
     public ServerResponse update(HttpServletRequest request, Shipping shipping) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -83,7 +89,8 @@ public class ShippingController {
      * @param shippingId 地址 id
      * @return 地址信息
      */
-    @RequestMapping("select")
+    @PostMapping("select")
+    @ApiOperation(value = "查询收货地址")
     public ServerResponse<Shipping> select(HttpServletRequest request, Integer shippingId) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
@@ -100,7 +107,8 @@ public class ShippingController {
      * @param request 请求
      * @return
      */
-    @RequestMapping("list")
+    @PostMapping("list")
+    @ApiOperation(value = "查询某用户的所有收货地址，并分页")
     public ServerResponse<PageInfo> list(@RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
                                          @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
                                          HttpServletRequest request) {
@@ -129,13 +137,13 @@ public class ShippingController {
      * @return 结果
      */
     private ServerResponse<User> loginHasExpired(HttpServletRequest request) {
-        String key = request.getHeader(Const.AUTHORITY);
+        String key = request.getHeader(UserConst.AUTHORITY);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         String value = valueOperations.get(key);
         if (StringUtils.isEmpty(value)) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        User user = JsonUtil.jsonStr2Object(value, User.class);
+        User user = JsonUtils.jsonStr2Object(value, User.class);
         if (!key.equals(user.getUsername())) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }

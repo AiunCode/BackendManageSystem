@@ -1,10 +1,8 @@
 package com.aiun.order.service;
 
 import com.aiun.common.ServerResponse;
-import com.aiun.order.vo.OrderVo;
+import com.aiun.order.vo.OrderVO;
 import com.github.pagehelper.PageInfo;
-
-import java.util.Map;
 
 /**
  * 订单接口
@@ -17,7 +15,7 @@ public interface IOrderService {
      * @param shippingId 收货地址id
      * @return 返回订单信息
      */
-    ServerResponse<OrderVo> createOrder(Integer userId, Integer shippingId);
+    ServerResponse<OrderVO> createOrder(Integer userId, Integer shippingId);
 
     /**
      * 取消订单
@@ -39,7 +37,7 @@ public interface IOrderService {
      * @param orderNo 订单号
      * @return 返回结果
      */
-    ServerResponse<OrderVo> getOrderDetail(Integer userId, Long orderNo);
+    ServerResponse<OrderVO> getOrderDetail(Integer userId, Long orderNo);
 
     /**
      * 获取订单列表

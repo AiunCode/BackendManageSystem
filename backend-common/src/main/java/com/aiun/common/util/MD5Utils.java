@@ -9,10 +9,10 @@ import java.security.MessageDigest;
 /**
  * @author lenovo
  */
-public class MD5Util {
+public class MD5Utils {
     @Value("${password.salt}")
     private static String passwordSalt;
-    private static Logger logger = LoggerFactory.getLogger(MD5Util.class);
+    private static Logger logger = LoggerFactory.getLogger(MD5Utils.class);
 
     private static String byteArrayToHexString(byte b[]) {
         StringBuffer resultSb = new StringBuffer();

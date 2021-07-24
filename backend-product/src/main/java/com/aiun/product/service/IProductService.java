@@ -2,9 +2,8 @@ package com.aiun.product.service;
 
 import com.aiun.common.ServerResponse;
 import com.aiun.product.pojo.Product;
-import com.aiun.product.vo.ProductDetailVo;
+import com.aiun.product.vo.ProductDetailVO;
 import com.github.pagehelper.PageInfo;
-import org.springframework.stereotype.Service;
 
 /**
  * @author lenovo
@@ -40,7 +39,7 @@ public interface IProductService {
      * @param productId
      * @return
      */
-    ServerResponse<ProductDetailVo> getProductDetail(Integer productId);
+    ServerResponse<ProductDetailVO> getProductDetail(Integer productId);
 
     /**
      * 通过商品种类的关键字获取产品

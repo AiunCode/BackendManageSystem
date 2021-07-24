@@ -1,17 +1,18 @@
 package com.aiun.product.service.impl;
 
-import com.aiun.common.Const;
+import com.aiun.common.constant.ProductStatusEnum;
+import com.aiun.common.constant.UserConst;
 import com.aiun.common.ResponseCode;
 import com.aiun.common.ServerResponse;
-import com.aiun.common.util.DateUtil;
+import com.aiun.common.util.DateUtils;
 import com.aiun.product.mapper.CategoryMapper;
 import com.aiun.product.mapper.ProductMapper;
 import com.aiun.product.pojo.Category;
 import com.aiun.product.pojo.Product;
 import com.aiun.product.service.ICategoryService;
 import com.aiun.product.service.IProductService;
-import com.aiun.product.vo.ProductDetailVo;
-import com.aiun.product.vo.ProductListVo;
+import com.aiun.product.vo.ProductDetailVO;
+import com.aiun.product.vo.ProductListVO;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -40,7 +41,7 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public ServerResponse saveOrUpdateProduct(Product product) {
         if(product != null) {
-            //更新产品
+            // 更新产品
             if (product.getId() != null) {
                 int resultCount = productMapper.updateByPrimaryKey(product);
                 if (resultCount > 0) {
@@ -80,17 +81,17 @@ public class ProductServiceImpl implements IProductService {
     }
 
     @Override
-    public ServerResponse<ProductDetailVo> getProductDetail(Integer productId) {
+    public ServerResponse<ProductDetailVO> getProductDetail(Integer productId) {
         if (productId == null) {
             return ServerResponse.createByErrorMessage(ResponseCode.ILLEGAL_ARGUMENT.getCode(), "参数不正确");
         }
         Product product = productMapper.selectByPrimaryKey(productId);
-        if ((product == null) || (product.getStatus() != Const.ProductStatusEnum.ON_SALE.getCode())) {
+        if ((product == null) || (product.getStatus() != ProductStatusEnum.ON_SALE.getCode())) {
             return ServerResponse.createByErrorMessage("产品已下架或者删除");
         }
 
         //VO对象 value object
-        ProductDetailVo productDetailVo = assembleProductDetailVo(product);
+        ProductDetailVO productDetailVo = assembleProductDetailVo(product);
 
         return ServerResponse.createBySuccess(productDetailVo);
     }
@@ -106,7 +107,7 @@ public class ProductServiceImpl implements IProductService {
             if (category == null && StringUtils.isBlank(keyword)) {
                 //没有该分类，并且还没有关键字，返回一个空的结果集
                 PageHelper.startPage(pageNum, pageSize);
-                List<ProductListVo> productListVoList = Lists.newArrayList();
+                List<ProductListVO> productListVoList = Lists.newArrayList();
                 PageInfo pageInfo = new PageInfo(productListVoList);
                 return ServerResponse.createBySuccess(pageInfo);
             }
@@ -144,14 +145,10 @@ public class ProductServiceImpl implements IProductService {
      * @return
      */
     private ServerResponse<PageInfo> getPageInfoServerResponse(List<Product> productList) {
-        List<ProductListVo> productListVoList = Lists.newArrayList();
-//        for (Product productItem : productList) {
-//            ProductListVo productListVo = assembleProductListVo(productItem);
-//            productListVoList.add(productListVo);
-//        }
-        // Lambda
+        List<ProductListVO> productListVoList = Lists.newArrayList();
+
         productList.forEach(e->{
-            ProductListVo productListVo = assembleProductListVo(e);
+            ProductListVO productListVo = assembleProductListVo(e);
             productListVoList.add(productListVo);
         });
 
@@ -166,16 +163,16 @@ public class ProductServiceImpl implements IProductService {
      * @param product
      * @return
      */
-    private ProductListVo assembleProductListVo(Product product) {
-        ProductListVo productListVo = new ProductListVo();
-        productListVo.setId(product.getId());
-        productListVo.setCategoryId(product.getCategoryId());
-        productListVo.setName(product.getName());
-        productListVo.setMainImage(product.getMainImage());
-        productListVo.setPrice(product.getPrice());
-        productListVo.setSubtitle(product.getSubtitle());
-        productListVo.setImageHost(mageHost);
-        productListVo.setStatus(product.getStatus());
+    private ProductListVO assembleProductListVo(Product product) {
+        ProductListVO productListVo = new ProductListVO();
+        productListVo.setId(product.getId())
+            .setCategoryId(product.getCategoryId())
+            .setName(product.getName())
+            .setMainImage(product.getMainImage())
+            .setPrice(product.getPrice())
+            .setSubtitle(product.getSubtitle())
+            .setImageHost(mageHost)
+            .setStatus(product.getStatus());
 
         return productListVo;
     }
@@ -185,18 +182,18 @@ public class ProductServiceImpl implements IProductService {
      * @param product
      * @return
      */
-    private ProductDetailVo assembleProductDetailVo(Product product) {
-        ProductDetailVo productDetailVo = new ProductDetailVo();
-        productDetailVo.setId(product.getId());
-        productDetailVo.setPrice(product.getPrice());
-        productDetailVo.setSubtitle(product.getSubtitle());
-        productDetailVo.setMainImage(product.getMainImage());
-        productDetailVo.setSubImages(product.getSubImages());
-        productDetailVo.setCategoryId(product.getCategoryId());
-        productDetailVo.setDetail(product.getDetail());
-        productDetailVo.setName(product.getName());
-        productDetailVo.setStatus(product.getStatus());
-        productDetailVo.setStock(product.getStock());
+    private ProductDetailVO assembleProductDetailVo(Product product) {
+        ProductDetailVO productDetailVo = new ProductDetailVO();
+        productDetailVo.setId(product.getId())
+            .setPrice(product.getPrice())
+            .setSubtitle(product.getSubtitle())
+            .setMainImage(product.getMainImage())
+            .setSubImages(product.getSubImages())
+            .setCategoryId(product.getCategoryId())
+            .setDetail(product.getDetail())
+            .setName(product.getName())
+            .setStatus(product.getStatus())
+            .setStock(product.getStock());
 
         productDetailVo.setImageHost(mageHost);
 
@@ -208,8 +205,8 @@ public class ProductServiceImpl implements IProductService {
             productDetailVo.setParentCategoryId(category.getParentId());
         }
 
-        productDetailVo.setCreateTime(DateUtil.dateToString(product.getCreateTime()));
-        productDetailVo.setUpdateTime(DateUtil.dateToString(product.getUpdateTime()));
+        productDetailVo.setCreateTime(DateUtils.dateToString(product.getCreateTime()));
+        productDetailVo.setUpdateTime(DateUtils.dateToString(product.getUpdateTime()));
 
         return productDetailVo;
     }

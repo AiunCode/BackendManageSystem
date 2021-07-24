@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 /**
  * @author lenovo
  */
-public class BigDecimalUtil {
+public class BigDecimalUtils {
 
     public static BigDecimal add(double v1, double v2) {
         String strV1 = Double.toString(v1);

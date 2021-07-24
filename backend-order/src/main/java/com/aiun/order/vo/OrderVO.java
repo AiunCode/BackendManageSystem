@@ -22,7 +22,7 @@ import java.util.List;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @ApiModel(value = "订单展示信息")
-public class OrderVo {
+public class OrderVO {
     @ApiModelProperty(value = "订单号")
     private Long orderNo;
     @ApiModelProperty(value = "支付金额")
@@ -49,7 +49,7 @@ public class OrderVo {
     private String createTime;
     //订单明细
     @ApiModelProperty(value = "订单详情列表")
-    private List<OrderItemVo> orderItemVoList;
+    private List<OrderItemVO> orderItemVOList;
     @ApiModelProperty(value = "主图地址")
     private String imageHost;
     @ApiModelProperty(value = "地址 id")

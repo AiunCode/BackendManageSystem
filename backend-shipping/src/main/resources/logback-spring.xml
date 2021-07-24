@@ -15,7 +15,7 @@
             <charset>UTF-8</charset>
         </encoder>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
-            <level>ERROR</level>
+            <level>INFO</level>
             <!--高于level中设置的级别，则打印日志-->
             <onMatch>ACCEPT</onMatch>
             <!--低于level中设置的级别，则屏蔽日志-->

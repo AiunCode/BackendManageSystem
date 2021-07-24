@@ -21,9 +21,9 @@ import java.util.List;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @ApiModel(value = "购物车里选中的商品信息")
-public class OrderProductVo {
+public class OrderProductVO {
     @ApiModelProperty(value = "订单详情列表信息")
-    private List<OrderItemVo> orderItemVoList;
+    private List<OrderItemVO> orderItemVOList;
     @ApiModelProperty(value = "产品总价")
     private BigDecimal productTotalPrice;
     @ApiModelProperty(value = "主图地址")

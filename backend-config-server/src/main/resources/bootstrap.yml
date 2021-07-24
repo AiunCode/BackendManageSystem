@@ -9,4 +9,7 @@ spring:
           uri: https://gitee.com/aiuncode/backend-config-center.git
           default-label: master
           timeout: 50
+          username: 2952513080@qq.com
+          password: liyuan240513
+          basedir: F:\Study\GitTemp
 

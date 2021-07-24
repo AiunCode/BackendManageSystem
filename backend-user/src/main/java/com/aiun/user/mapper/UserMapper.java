@@ -4,9 +4,10 @@ import com.aiun.user.pojo.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 @Mapper
-@Component
+@Repository
 public interface UserMapper {
     /**
      * 根据主键删除用户

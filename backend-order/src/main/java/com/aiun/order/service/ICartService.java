@@ -1,7 +1,7 @@
 package com.aiun.order.service;
 
 import com.aiun.common.ServerResponse;
-import com.aiun.order.vo.CartVo;
+import com.aiun.order.vo.CartVO;
 
 /**
  * 购物车接口
@@ -15,7 +15,7 @@ public interface ICartService {
      * @param count
      * @return
      */
-    ServerResponse<CartVo> add(Integer userId, Integer productId, Integer count);
+    ServerResponse<CartVO> add(Integer userId, Integer productId, Integer count);
 
     /**
      * 更新购物车商品功能
@@ -24,7 +24,7 @@ public interface ICartService {
      * @param count
      * @return
      */
-    ServerResponse<CartVo> update(Integer userId, Integer productId, Integer count);
+    ServerResponse<CartVO> update(Integer userId, Integer productId, Integer count);
 
     /**
      * 删除购物车商品
@@ -32,14 +32,14 @@ public interface ICartService {
      * @param productIds 产品所有 id
      * @return
      */
-    ServerResponse<CartVo> deleteProduct(Integer userId, String productIds);
+    ServerResponse<CartVO> deleteProduct(Integer userId, String productIds);
 
     /**
      * 查询购物车商品列表
      * @param userId 用户 id
      * @return
      */
-    ServerResponse<CartVo> list(Integer userId);
+    ServerResponse<CartVO> list(Integer userId);
 
     /**
      *
@@ -48,7 +48,7 @@ public interface ICartService {
      * @param checked
      * @return
      */
-    ServerResponse<CartVo> selectOrUnSelect(Integer userId, Integer productId, Integer checked);
+    ServerResponse<CartVO> selectOrUnSelect(Integer userId, Integer productId, Integer checked);
 
     /**
      * 得到购物车中产品数量

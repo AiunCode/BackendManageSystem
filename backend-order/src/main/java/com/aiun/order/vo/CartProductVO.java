@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @Accessors(chain = true)
 @EqualsAndHashCode
 @ApiModel(value = "产品和购物车的抽象对象")
-public class CartProductVo {
+public class CartProductVO {
     @ApiModelProperty(value = "主键")
     private Integer id;
     @ApiModelProperty(value = "用户 id")

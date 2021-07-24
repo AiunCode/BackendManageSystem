@@ -1,17 +1,18 @@
 package com.aiun.product.controller;
 
-import com.aiun.common.Const;
+import com.aiun.common.constant.UserConst;
 import com.aiun.common.ResponseCode;
 import com.aiun.common.ServerResponse;
-import com.aiun.common.util.JsonUtil;
+import com.aiun.common.util.JsonUtils;
 import com.aiun.product.pojo.Product;
 import com.aiun.product.service.IFileService;
 import com.aiun.product.service.IProductService;
-import com.aiun.product.vo.ProductDetailVo;
-import com.aiun.user.feign.UserFeign;
+import com.aiun.product.vo.ProductDetailVO;
 import com.aiun.user.pojo.User;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Maps;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,7 @@ import java.util.concurrent.TimeUnit;
  * 产品控制层
  * @author lenovo
  */
+@Api(tags = "产品相关接口")
 @RestController
 @RequestMapping("/product/")
 public class ProductController {
@@ -45,12 +47,13 @@ public class ProductController {
      * @param product 产品信息
      * @return 操作结果
      */
-    @RequestMapping("manage/save")
+    @PostMapping("manage/save")
+    @ApiOperation(value = "保存或更新产品")
     public ServerResponse productSave(HttpServletRequest request, Product product) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == UserConst.Role.ROLE_ADMIN) {
                 return iProductService.saveOrUpdateProduct(product);
             } else {
                 return ServerResponse.createByErrorMessage("无权限操作");
@@ -61,28 +64,19 @@ public class ProductController {
     /**
      * 文件上传
      * @param file 文件
-     * @param request 请求
      * @return 返回给前端的信息
      */
-    @RequestMapping("manage/upload")
-    public ServerResponse upload(HttpServletRequest request, @RequestParam(value = "upload_file", required = false) MultipartFile file) {
-        ServerResponse hasLogin = loginHasExpired(request);
-        if (hasLogin.isSuccess()) {
-            User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
-                String targetFileName = iFileService.upload(file, mageHost);
-                String url =  mageHost + targetFileName;
+    @PostMapping("manage/upload")
+    @ApiOperation(value = "文件上传", notes = "文件上传")
+    public ServerResponse upload(@RequestParam(value = "upload_file", required = false) MultipartFile file) {
+        String targetFileName = iFileService.upload(file, mageHost);
+        String url =  mageHost + targetFileName;
 
-                Map fileMap = Maps.newHashMap();
-                fileMap.put("uri", targetFileName);
-                fileMap.put("url", url);
+        Map fileMap = Maps.newHashMap();
+        fileMap.put("uri", targetFileName);
+        fileMap.put("url", url);
 
-                return ServerResponse.createBySuccess(fileMap);
-            } else {
-                return ServerResponse.createByErrorMessage("无权限操作");
-            }
-        }
-        return hasLogin;
+        return ServerResponse.createBySuccess(fileMap);
     }
 
     /**
@@ -90,8 +84,9 @@ public class ProductController {
      * @param productId 产品 id
      * @return 返回的产品详情信息
      */
-    @RequestMapping("detail")
-    public ServerResponse<ProductDetailVo> detail(Integer productId) {
+    @PostMapping("detail")
+    @ApiOperation(value = "获取产品详情")
+    public ServerResponse<ProductDetailVO> detail(Integer productId) {
         return iProductService.getProductDetail(productId);
     }
 
@@ -104,7 +99,8 @@ public class ProductController {
      * @param orderBy 排序规则
      * @return 返回具体信息
      */
-    @RequestMapping("list")
+    @PostMapping("list")
+    @ApiOperation(value = "获取产品列表")
     public ServerResponse<PageInfo> list(@RequestParam(value = "keyword", required = false) String keyword,
                                          @RequestParam(value = "categoryId", required = false) Integer categoryId,
                                          @RequestParam(value = "pageNum", defaultValue = "1") int pageNum,
@@ -119,13 +115,13 @@ public class ProductController {
      * @return 结果
      */
     private ServerResponse<User> loginHasExpired(HttpServletRequest request) {
-        String key = request.getHeader(Const.AUTHORITY);
+        String key = request.getHeader(UserConst.AUTHORITY);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         String value = valueOperations.get(key);
         if (StringUtils.isEmpty(value)) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        User user = JsonUtil.jsonStr2Object(value, User.class);
+        User user = JsonUtils.jsonStr2Object(value, User.class);
         if (!key.equals(user.getUsername())) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }

@@ -14,7 +14,7 @@
     <packaging>pom</packaging>
 
     <description>
-        通用的API javean feign的父工程
+        通用的API java feign的父工程
     </description>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

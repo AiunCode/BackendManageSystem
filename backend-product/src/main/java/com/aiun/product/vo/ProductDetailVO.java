@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @ApiModel(value = "产品详情展示信息")
-public class ProductDetailVo {
+public class ProductDetailVO {
     @ApiModelProperty(value = "主键")
     private Integer id;
     @ApiModelProperty(value = "分类 id")

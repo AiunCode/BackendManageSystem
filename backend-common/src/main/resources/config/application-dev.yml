@@ -12,6 +12,7 @@ spring:
         max-wait: 10000       # 最大连接阻塞等待时间，单位毫秒，默认 -1
         max-idle: 200         # 最大空闲连接，默认 8
         min-idle: 5           # 最小空闲连接，默认 0
- # MD5 盐值
+
+# MD5 盐值
 password:
  salt: geelysdafaqj23ou89ZXcj@#$@#$#@KJdjklj;D../dSF.,

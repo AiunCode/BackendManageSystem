@@ -37,7 +37,7 @@ public class Product implements Serializable {
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "分类 id")
+    @ApiModelProperty(value = "分类 id，对应trade_category表的主键")
     private Integer categoryId;
 
     /**
@@ -67,7 +67,7 @@ public class Product implements Serializable {
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "产品主图")
+    @ApiModelProperty(value = "产品主图，产品主图,url相对地址")
     private String mainImage;
 
     /**
@@ -77,7 +77,7 @@ public class Product implements Serializable {
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "产品副图")
+    @ApiModelProperty(value = "产品副图，图片地址,json格式,扩展用")
     private String subImages;
 
     /**
@@ -97,7 +97,7 @@ public class Product implements Serializable {
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "产品价格")
+    @ApiModelProperty(value = "产品价格，单位-元保留两位小数")
     private BigDecimal price;
 
     /**
@@ -117,7 +117,7 @@ public class Product implements Serializable {
      *
      * @mbg.generated
      */
-    @ApiModelProperty(value = "产品状态")
+    @ApiModelProperty(value = "产品状态，1-在售 2-下架 3-删除")
     private Integer status;
 
     /**

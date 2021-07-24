@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @Accessors(chain = true)
 @ApiModel(value = "订单详情前端展示信息类")
-public class OrderItemVo {
+public class OrderItemVO {
     @ApiModelProperty(value = "订单号")
     private Long orderNo;
     @ApiModelProperty(value = "产品 id")

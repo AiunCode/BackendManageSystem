@@ -1,9 +1,9 @@
 package com.aiun.order.controller;
 
-import com.aiun.common.Const;
+import com.aiun.common.constant.UserConst;
 import com.aiun.common.ResponseCode;
 import com.aiun.common.ServerResponse;
-import com.aiun.common.util.JsonUtil;
+import com.aiun.common.util.JsonUtils;
 import com.aiun.order.service.IOrderService;
 import com.aiun.user.pojo.User;
 import com.github.pagehelper.PageInfo;
@@ -14,13 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,7 +39,7 @@ public class OrderController {
      * @param shippingId 收货地址id
      * @return 结果
      */
-    @RequestMapping("create")
+    @GetMapping("create")
     @ApiOperation(value = "创建订单")
     public ServerResponse create(HttpServletRequest request, Integer shippingId) {
         ServerResponse hasLogin = loginHasExpired(request);
@@ -60,7 +56,7 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 返回结果
      */
-    @RequestMapping("cancel")
+    @PostMapping("cancel")
     @ApiOperation(value = "取消订单")
     public ServerResponse cancel(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
@@ -75,7 +71,7 @@ public class OrderController {
      * @param request 请求
      * @return 返回结果
      */
-    @RequestMapping("get_order_cart_product")
+    @PostMapping("get_order_cart_product")
     @ApiOperation(value = "获取购物车中已经选中的商品信息")
     public ServerResponse getOrderCartProduct(HttpServletRequest request) {
         ServerResponse hasLogin = loginHasExpired(request);
@@ -92,13 +88,13 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 订单详情
      */
-    @RequestMapping("detail")
+    @PostMapping("detail")
     @ApiOperation(value = "获取订单详细信息")
     public ServerResponse detail(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == UserConst.Role.ROLE_ADMIN) {
                 return iOrderService.getOrderDetail(null, orderNo);
             } else {
                 return iOrderService.getOrderDetail(user.getId(), orderNo);
@@ -114,13 +110,13 @@ public class OrderController {
      * @param pageSize 页的大小
      * @return 返回订单列表信息
      */
-    @RequestMapping("list")
+    @PostMapping("list")
     @ApiOperation(value = "获取订单列表信息")
     public ServerResponse list(HttpServletRequest request, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == UserConst.Role.ROLE_ADMIN) {
                 return iOrderService.getOrderList(null, pageNum, pageSize);
             } else {
                 return iOrderService.getOrderList(user.getId(), pageNum, pageSize);
@@ -136,13 +132,13 @@ public class OrderController {
      * @param pageSize 页大小
      * @return 返回结果
      */
-    @RequestMapping("manage/search")
+    @PostMapping("manage/search")
     @ApiOperation(value = "订单查询")
     public ServerResponse<PageInfo> orderSearch(HttpServletRequest request, Long orderNo, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum, @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == UserConst.Role.ROLE_ADMIN) {
                 return iOrderService.manageSearch(orderNo, pageNum, pageSize);
             } else {
                 return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
@@ -157,13 +153,13 @@ public class OrderController {
      * @param orderNo 订单号
      * @return 发货信息
      */
-    @RequestMapping("send_goods")
+    @PostMapping("send_goods")
     @ApiOperation(value = "发货")
     public ServerResponse<String> orderSendGoods(HttpServletRequest request, Long orderNo) {
         ServerResponse hasLogin = loginHasExpired(request);
         if (hasLogin.isSuccess()) {
             User user = (User) hasLogin.getData();
-            if (user.getRole() == Const.Role.ROLE_ADMIN) {
+            if (user.getRole() == UserConst.Role.ROLE_ADMIN) {
                 return iOrderService.manageSendGoods(orderNo);
             } else {
                 return ServerResponse.createByErrorMessage("无权限操作，需要管理员权限");
@@ -175,13 +171,13 @@ public class OrderController {
      * 判断用户登录是否过期
      */
     private ServerResponse<User> loginHasExpired(HttpServletRequest request) {
-        String key = request.getHeader(Const.AUTHORITY);
+        String key = request.getHeader(UserConst.AUTHORITY);
         ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
         String value = valueOperations.get(key);
         if (StringUtils.isEmpty(value)) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
-        User user = JsonUtil.jsonStr2Object(value, User.class);
+        User user = JsonUtils.jsonStr2Object(value, User.class);
         if (!key.equals(user.getUsername())) {
             return ServerResponse.createByErrorMessage(ResponseCode.NEED_LOGIN.getCode(), ResponseCode.NEED_LOGIN.getDesc());
         }
